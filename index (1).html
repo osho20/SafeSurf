@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeSurf - Cyber Safety Toolkit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🛡️ SafeSurf</h1>
+    <p>A free cyber safety toolkit. Everything runs in your browser, nothing is sent to any server.</p>
+  </header>
+
+  <nav id="tabs">
+    <button class="tab active" data-tab="password">🔑 Password</button>
+    <button class="tab" data-tab="phishing">🎣 Phishing</button>
+    <button class="tab" data-tab="hash">#️⃣ Hash</button>
+    <button class="tab" data-tab="crypto">🔒 Encrypt</button>
+    <button class="tab" data-tab="quiz">🧠 Quiz</button>
+  </nav>
+
+  <main>
+    <!-- PASSWORD -->
+    <section id="password" class="panel active">
+      <div class="card">
+        <h2>Password Analyzer</h2>
+        <p class="muted">Your password never leaves this page.</p>
+        <div class="row">
+          <input type="password" id="pw" placeholder="Type a password to test" autocomplete="off">
+          <button class="small" id="pw-toggle">Show</button>
+        </div>
+        <div class="meter"><div id="pw-bar"></div></div>
+        <p><strong id="pw-label">Type a password</strong></p>
+        <p class="muted">Entropy: <span id="pw-entropy">0</span> bits &middot; Time to crack (fast attacker): <span id="pw-crack">-</span></p>
+        <ul id="pw-checks" class="checks"></ul>
+        <button id="breach-btn">Check if this password was leaked</button>
+        <p id="breach-result" class="result"></p>
+        <p class="muted tiny">Uses the Have I Been Pwned range API. Only the first 5 characters of the password's SHA-1 hash are sent (k-anonymity), never the password.</p>
+      </div>
+
+      <div class="card">
+        <h2>Strong Password Generator</h2>
+        <label>Length: <span id="gen-len-val">16</span>
+          <input type="range" id="gen-len" min="8" max="40" value="16">
+        </label>
+        <label class="inline"><input type="checkbox" id="gen-symbols" checked> Include symbols</label>
+        <div class="row">
+          <input type="text" id="gen-out" readonly placeholder="Click Generate">
+          <button class="small" id="gen-copy">Copy</button>
+        </div>
+        <button id="gen-btn">Generate</button>
+      </div>
+    </section>
+
+    <!-- PHISHING -->
+    <section id="phishing" class="panel">
+      <div class="card">
+        <h2>Phishing Link Analyzer</h2>
+        <p class="muted">Paste a suspicious link. We never open it, we only inspect its text.</p>
+        <input type="text" id="url-in" placeholder="e.g. http://paypa1-secure-login.xyz/verify">
+        <button id="url-btn">Analyze link</button>
+        <div id="url-out" hidden>
+          <div class="meter"><div id="url-bar"></div></div>
+          <p><strong id="url-verdict"></strong> &middot; Risk score <span id="url-score"></span>/100</p>
+          <p class="muted">Domain: <span id="url-domain"></span></p>
+          <ul id="url-findings" class="checks"></ul>
+        </div>
+        <p class="muted tiny">Try: <a href="#" class="sample">https://google.com</a> &middot; <a href="#" class="sample">http://192.168.4.7/bank/login</a> &middot; <a href="#" class="sample">http://amazon-support.account-verify.top/update</a></p>
+      </div>
+    </section>
+
+    <!-- HASH -->
+    <section id="hash" class="panel">
+      <div class="card">
+        <h2>Hash Generator</h2>
+        <p class="muted">A hash is a fingerprint. Change one letter and the hash changes completely.</p>
+        <textarea id="hash-in" rows="3" placeholder="Type any text"></textarea>
+        <p class="label">SHA-256</p><code id="h256" class="hashbox">-</code>
+        <p class="label">SHA-512</p><code id="h512" class="hashbox">-</code>
+        <p class="label">SHA-1 (outdated)</p><code id="h1" class="hashbox">-</code>
+      </div>
+      <div class="card">
+        <h2>File Integrity Checker</h2>
+        <p class="muted">Verify a downloaded file was not tampered with.</p>
+        <input type="file" id="file-in">
+        <p class="label">File SHA-256</p><code id="file-hash" class="hashbox">-</code>
+        <input type="text" id="expected" placeholder="Paste the expected SHA-256 here to compare">
+        <p id="file-result" class="result"></p>
+      </div>
+    </section>
+
+    <!-- CRYPTO -->
+    <section id="crypto" class="panel">
+      <div class="card">
+        <h2>Encrypt / Decrypt Text</h2>
+        <p class="muted">AES-256-GCM with a key derived from your passphrase (PBKDF2, 150,000 rounds).</p>
+        <textarea id="enc-text" rows="4" placeholder="Text to encrypt, or encrypted text to decrypt"></textarea>
+        <input type="password" id="enc-pass" placeholder="Passphrase" autocomplete="off">
+        <div class="row">
+          <button id="enc-btn">Encrypt</button>
+          <button id="dec-btn">Decrypt</button>
+        </div>
+        <textarea id="enc-out" rows="4" readonly placeholder="Result appears here"></textarea>
+        <p id="enc-status" class="result"></p>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="panel">
+      <div class="card">
+        <h2>Cyber Safety Quiz</h2>
+        <div id="quiz-box"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>SafeSurf &middot; Built at a hackathon &middot; For education only</footer>
+
+  <script src="logic.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
